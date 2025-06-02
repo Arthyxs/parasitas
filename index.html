@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta Parasita: Desafio Diagnóstico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main id="game-app">
+
+        <section id="start-screen">
+            <header>
+                <h1>Alerta Parasita: Desafio Diagnóstico</h1>
+            </header>
+            <div class="content">
+                <p>Bem-vindo, agente de saúde!</p>
+                <p>Sua missão é realizar <strong>4 diagnósticos corretos</strong> sobre parasitas antes que suas <strong>fichas de investigação</strong> acabem.</p>
+                <p>Você tem <strong id="start-screen-hints">2 dicas</strong> disponíveis por missão.</p>
+                <p>Use seus conhecimentos para proteger a comunidade. Boa sorte!</p>
+            </div>
+            <footer>
+                <button id="start-button" type="button">Iniciar Missão!</button>
+            </footer>
+        </section>
+
+        <section id="game-screen" class="hidden">
+            <header class="game-header">
+                <h2>Investigação em Andamento...</h2>
+                <div id="stats-area">
+                    <p>Diagnósticos Corretos: <span id="diagnosticos-corretos">0</span> / 4</p>
+                    <p>Fichas de Investigação Restantes: <span id="fichas-restantes">5</span></p>
+                    <p>Dicas Restantes: <span id="hints-remaining-count">2</span></p>
+                </div>
+            </header>
+
+            <div id="question-container">
+                <h3 id="question-title">Pergunta X</h3>
+                <p id="question-text">Carregando pergunta...</p>
+            </div>
+
+            <div id="options-area">
+                </div>
+            
+            <div id="controls-area"> 
+                <button id="hint-button" type="button">Usar Dica 💡</button>
+            </div>
+
+            <div id="feedback-area">
+                <p id="feedback-text"></p>
+            </div>
+
+            <footer>
+                <button id="next-question-button" type="button" class="hidden">Próxima Pergunta</button>
+            </footer>
+        </section>
+
+        <section id="end-screen" class="hidden">
+            <header>
+                <h2 id="end-title">Fim da Missão!</h2>
+            </header>
+            <div class="content">
+                <p id="end-message">Mensagem final aqui...</p>
+                <p>Diagnósticos corretos: <span id="final-score">0</span></p>
+            </div>
+            <footer>
+                <button id="restart-button" type="button">Jogar Novamente</button>
+            </footer>
+        </section>
+
+    </main>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

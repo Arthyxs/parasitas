@@ -1,0 +1,547 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=Roboto+Mono:wght@400;500&family=Poppins:wght@300;400;500&display=swap');
+
+/* CSS Variables: Tema "Interface de Bio-Rastreamento Noturno" */
+:root {
+    --primary-bg-color: #051014;       /* Azul super escuro, quase preto petróleo */
+    --secondary-bg-color: #0A1820;     /* Azul escuro para painéis */
+    --panel-border-color: #1E3A47;     /* Borda sutil, azul acinzentado */
+    --glow-color: rgba(0, 255, 198, 0.1); /* Brilho sutil para elementos */
+
+    --text-primary-color: #B0CFD9;     /* Ciano pálido/Azul claro para texto principal */
+    --text-secondary-color: #6A8FAC;   /* Cinza azulado para texto secundário */
+    
+    --accent-color: #00FFC6;           /* Verde neon/ciano vibrante para destaques */
+    --accent-hover-color: #5CFFF5;     /* Tom mais claro do accent para hover */
+    --accent-active-color: #00D1A1;    /* Tom mais escuro ou intenso para clique */
+
+    --success-color: var(--accent-color);
+    --error-color: #FF6B6B;            /* Vermelho vibrante, mas não estridente */
+    --warning-color: #FFC107;          /* Amarelo alerta */
+    
+    --parasite-detail-color: #7E57C2;  /* Roxo profundo para detalhes temáticos sutis */
+    --parasite-detail-bg: rgba(126, 87, 194, 0.05); /* Fundo sutil com cor temática */
+
+    --font-primary: 'Poppins', sans-serif; /* Mantendo Poppins para corpo do texto */
+    --font-headings: 'Titillium Web', sans-serif; /* Mantendo Titillium para títulos */
+    --font-code: 'Roboto Mono', monospace; /* Para stats, ou elementos "de dados" */
+
+    --border-radius-sharp: 3px;
+    --border-radius-soft: 6px;
+    --padding-small: 0.75rem;
+    --padding-medium: 1.25rem;
+    --padding-large: 2rem;
+    
+    /* Sombra com a cor de destaque para um efeito "neon" */
+    --shadow-glow-accent: 0 0 12px rgba(0, 255, 198, 0.3), 0 0 20px rgba(0, 255, 198, 0.2);
+    --shadow-glow-error: 0 0 12px rgba(255, 107, 107, 0.3), 0 0 20px rgba(255, 107, 107, 0.2);
+    --shadow-inset: inset 0 1px 3px rgba(0,0,0,0.3);
+
+    --transition-speed: 0.25s;
+    --transition-speed-fast: 0.15s;
+}
+
+/* Subtle organic/tech repeating background for panels - VERY SUBTLE */
+.subtle-scanlines {
+    background-image: linear-gradient(rgba(176, 207, 217, 0.02) 1px, transparent 1px);
+    background-size: 100% 3px; /* Linhas de varredura horizontais finas */
+}
+
+.subtle-dots {
+    background-image: radial-gradient(rgba(176, 207, 217, 0.03) 0.5px, transparent 0.5px);
+    background-size: 5px 5px; /* Pontilhado muito sutil */
+}
+
+
+/* Basic Reset & Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--primary-bg-color);
+    /* Efeito de grade sutil no fundo do body */
+    background-image: 
+        linear-gradient(rgba(30, 58, 71, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 58, 71, 0.2) 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: var(--text-primary-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--padding-medium);
+    transition: background-color var(--transition-speed) ease;
+}
+
+#game-app {
+    width: 100%;
+    max-width: 720px; 
+    background-color: var(--secondary-bg-color);
+    border-radius: var(--border-radius-soft);
+    border: 1px solid var(--panel-border-color);
+    box-shadow: 0 0 25px rgba(0,0,0,0.3), var(--shadow-glow-accent); /* Sombra escura + brilho suave */
+    overflow: hidden;
+    position: relative; /* Para pseudo-elementos se necessário */
+}
+
+/* Screen Sections Styling */
+section {
+    padding: var(--padding-large);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-medium);
+    /* Aplicando textura sutil às seções principais */
+    /* Escolha uma: subtle-scanlines ou subtle-dots */
+    /* Exemplo: class="subtle-scanlines" no HTML ou aqui: */
+    /* background-image: linear-gradient(rgba(176, 207, 217, 0.02) 1px, transparent 1px); */
+    /* background-size: 100% 3px; */
+}
+
+section header,
+section footer {
+    margin-bottom: var(--padding-small);
+    position: relative; /* Para linhas decorativas */
+}
+
+/* Linha decorativa para cabeçalhos de seção */
+section header::before {
+    content: '';
+    position: absolute;
+    bottom: -5px; /* Ajuste conforme necessário */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background-color: var(--accent-color);
+    opacity: 0.6;
+}
+
+
+/* Headings */
+h1, h2, h3 {
+    font-family: var(--font-headings);
+    color: var(--text-primary-color);
+    margin-bottom: var(--padding-medium);
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(176, 207, 217, 0.2); /* Leve brilho no texto */
+}
+
+h1 {
+    font-size: 2.3rem;
+    color: var(--accent-color);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px var(--accent-color), 0 0 12px var(--accent-color); /* Efeito neon mais forte */
+}
+
+h2 {
+    font-size: 1.9rem;
+}
+
+h3 { /* "Pergunta X" */
+    font-size: 1.2rem;
+    color: var(--text-secondary-color);
+    font-weight: 400;
+    margin-bottom: var(--padding-small);
+}
+
+/* Paragraphs and Text */
+p {
+    font-size: 1rem;
+    color: var(--text-primary-color);
+    margin-bottom: var(--padding-small);
+}
+
+#start-screen .content p, #end-screen .content p {
+    font-size: 1.05rem;
+    color: var(--text-secondary-color);
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+}
+
+strong {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Buttons Styling */
+button {
+    font-family: var(--font-headings);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: var(--padding-small) var(--padding-medium);
+    border: 1px solid var(--accent-color); /* Borda na cor de destaque */
+    border-radius: var(--border-radius-sharp);
+    cursor: pointer;
+    transition: all var(--transition-speed-fast) ease;
+    min-width: 160px;
+    letter-spacing: 0.5px;
+    background-color: transparent; /* Fundo transparente para efeito "outline" */
+    color: var(--accent-color);
+    box-shadow: var(--shadow-inset), 0 0 5px rgba(0, 255, 198, 0.2); /* Sombra interna e brilho sutil */
+}
+
+button:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-bg-color); /* Texto escuro no hover */
+    box-shadow: var(--shadow-glow-accent);
+    transform: translateY(-2px) scale(1.02); /* Leve elevação e zoom */
+}
+
+button:active {
+    background-color: var(--accent-active-color);
+    border-color: var(--accent-active-color);
+    transform: translateY(0) scale(1);
+}
+
+/* Primary action buttons (Start, Restart, Next) podem ter um preenchimento */
+#start-button,
+#restart-button,
+#next-question-button {
+    background-color: var(--accent-color);
+    color: var(--primary-bg-color); /* Texto escuro */
+    border-color: var(--accent-color);
+}
+
+#start-button:hover,
+#restart-button:hover,
+#next-question-button:hover {
+    background-color: var(--accent-hover-color);
+    color: var(--primary-bg-color);
+    border-color: var(--accent-hover-color);
+    box-shadow: var(--shadow-glow-accent);
+}
+
+
+/* Option Buttons */
+#options-area {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: var(--padding-small);
+    margin-top: var(--padding-medium);
+}
+
+@media (min-width: 600px) {
+    #options-area {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+.option-button {
+    background-color: rgba(10, 24, 32, 0.7); /* Fundo semi-transparente */
+    color: var(--text-primary-color);
+    border: 1px solid var(--panel-border-color);
+    border-radius: var(--border-radius-soft); /* Bordas mais suaves para opções */
+    width: 100%;
+    text-align: left;
+    padding: var(--padding-medium);
+    font-weight: 400;
+    transition: all var(--transition-speed) ease, transform var(--transition-speed-fast) ease;
+    backdrop-filter: blur(2px); /* Efeito de vidro fosco se suportado */
+    position: relative;
+    overflow: hidden; /* Para o efeito de brilho no hover */
+}
+
+/* Efeito de brilho sutil no hover para botões de opção */
+.option-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%; /* Começa fora da tela */
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 198, 0.15), transparent);
+    transition: left var(--transition-speed) ease-out;
+}
+
+.option-button:hover::before {
+    left: 150%; /* Move o brilho pela superfície */
+}
+
+.option-button:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-hover-color);
+    transform: scale(1.01); /* Leve aumento no hover */
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+.option-button.selected {
+    background-color: var(--accent-active-color);
+    color: var(--primary-bg-color);
+    border-color: var(--accent-color);
+    font-weight: 500;
+}
+.option-button.correct {
+    background-color: var(--success-color) !important;
+    color: var(--primary-bg-color) !important;
+    border-color: var(--success-color) !important;
+    font-weight: 500;
+    box-shadow: var(--shadow-glow-accent) !important;
+}
+.option-button.incorrect {
+    background-color: var(--error-color) !important;
+    color: #fff !important; /* Texto branco no erro */
+    border-color: var(--error-color) !important;
+    box-shadow: var(--shadow-glow-error) !important;
+    opacity: 0.85;
+}
+
+
+/* Stats Area */
+#stats-area {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: var(--padding-small) 0;
+    border-top: 1px dashed var(--panel-border-color); /* Linha tracejada */
+    border-bottom: 1px dashed var(--panel-border-color);
+    margin-bottom: var(--padding-medium);
+    font-family: var(--font-code); /* Fonte "de dados" */
+}
+
+#stats-area p {
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+    margin: 0;
+}
+#stats-area span {
+    color: var(--text-primary-color);
+    font-weight: 500; /* Números em negrito */
+    /* Efeito de pulsação sutil para as fichas restantes */
+}
+#fichas-restantes { /* */
+    color: var(--warning-color); /* Amarelo para fichas */
+    animation: pulseWarning 2s infinite ease-in-out;
+}
+
+@keyframes pulseWarning {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+
+/* Question and Feedback Area */
+#question-container {
+    margin-bottom: var(--padding-medium);
+    padding: var(--padding-medium);
+    background-color: var(--parasite-detail-bg); /* Fundo sutilmente temático */
+    border-radius: var(--border-radius-sharp);
+    border: 1px solid var(--parasite-detail-color);
+    border-left-width: 4px; /* Destaque lateral */
+    box-shadow: var(--shadow-inset);
+}
+
+#question-text {
+    font-size: 1.15rem;
+    min-height: 50px;
+    font-weight: 400;
+    color: var(--text-primary-color);
+    line-height: 1.7;
+}
+
+#feedback-area {
+    margin-top: var(--padding-medium);
+    min-height: 60px;
+    padding: var(--padding-medium);
+    border-radius: var(--border-radius-sharp);
+    opacity: 0; /* Controlado pelo JS */
+    transition: opacity var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    border: 1px solid transparent;
+}
+
+#feedback-text {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#feedback-text.success { /* Adicionado via JS */
+    color: var(--success-color);
+    border-color: var(--success-color);
+    box-shadow: var(--shadow-glow-accent);
+}
+
+#feedback-text.error { /* Adicionado via JS */
+    color: var(--error-color);
+    border-color: var(--error-color);
+    box-shadow: var(--shadow-glow-error);
+}
+
+/* Screen Visibility Control (Mantido) */
+.hidden {
+    display: none !important;
+}
+
+/* Specific Screen Styling */
+#end-screen #final-score {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-shadow: 0 0 5px var(--accent-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    body {
+        padding: var(--padding-small);
+        background-size: 40px 40px; /* Grade maior em mobile */
+    }
+    #game-app {
+        margin-top: 0;
+        margin-bottom: 0;
+        border-radius: 0;
+        border: none;
+        min-height: 100vh;
+        box-shadow: none; /* Remover brilho externo em mobile */
+    }
+    section {
+        padding: var(--padding-medium);
+    }
+    h1 {
+        font-size: 1.9rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+    #options-area {
+        grid-template-columns: 1fr; /* Sempre uma coluna */
+    }
+    .option-button:hover::before {
+        display: none; /* Remover efeito de brilho no hover em mobile (touch) */
+    }
+    #stats-area {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Animações (Mantidas e com pequenos ajustes) */
+.screen-fade-out {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px); /* Saída mais dinâmica */
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.screen-fade-in {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+}
+
+.element-fade-in {
+    opacity: 0;
+    transform: translateY(15px); /* Começa um pouco mais abaixo */
+    animation: fadeInElement 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes fadeInElement {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#options-area .option-button {
+    opacity: 0; 
+    transform: scale(0.9) rotateX(-20deg); /* Efeito 3D sutil ao aparecer */
+    transform-origin: bottom center;
+}
+
+.option-button-appear {
+    animation: optionAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; /* Easing com "overshoot" */
+}
+
+@keyframes optionAppear {
+    to {
+        opacity: 1;
+        transform: scale(1) rotateX(0deg);
+    }
+}
+/* Adicione estas novas regras ao seu style.css */
+
+/* ... (seu CSS existente do tema Bio-Rastreamento Noturno) ... */
+
+#start-screen-hints { /* Estilo para o texto de dicas na tela inicial */
+    color: var(--warning-color); /* Usando a cor de aviso para as dicas */
+}
+
+/* Área de Controles do Jogo (para o botão de dica) */
+#controls-area {
+    margin-top: var(--padding-medium);
+    margin-bottom: var(--padding-small);
+    text-align: center; /* Centralizar o botão de dica */
+}
+
+#hint-button {
+    background-color: transparent;
+    color: var(--warning-color); /* Cor de aviso para o botão de dica */
+    border: 1px solid var(--warning-color);
+    padding: var(--padding-small) calc(var(--padding-small) * 1.8); /* Padding ajustado */
+    font-size: 0.9rem;
+    min-width: 130px; /* Largura mínima */
+    box-shadow: var(--shadow-inset), 0 0 5px rgba(255, 193, 7, 0.3); /* Sombra com tom de aviso */
+    transition: all var(--transition-speed-fast) ease;
+}
+
+#hint-button:hover:not(:disabled) {
+    background-color: var(--warning-color);
+    color: var(--primary-bg-color); /* Texto escuro no hover */
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5), 0 0 15px rgba(255, 193, 7, 0.3);
+    transform: translateY(-2px) scale(1.03);
+}
+
+#hint-button:disabled {
+    background-color: rgba(106, 143, 172, 0.2); /* Cor de fundo para desabilitado */
+    color: var(--text-secondary-color);
+    border-color: var(--text-secondary-color);
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
+}
+
+#hint-button:disabled:hover {
+    transform: none; /* Sem efeito de hover quando desabilitado */
+}
+
+/* Estilo para opção removida pela dica */
+.option-button.hint-removed {
+    opacity: 0.35 !important;
+    background-color: var(--secondary-bg-color) !important; /* Fundo sutil */
+    color: var(--text-secondary-color) !important;
+    border-color: var(--panel-border-color) !important;
+    pointer-events: none; /* Não clicável */
+    text-decoration: line-through;
+    text-decoration-color: var(--error-color); /* Linha de corte vermelha */
+    box-shadow: none !important;
+    transform: scale(0.98) !important; /* Leve encolhimento */
+}
+
+/* Ajuste na área de stats para acomodar mais um item */
+#stats-area {
+    display: flex;
+    justify-content: space-around; /* Pode precisar de 'space-between' ou 'center' com gap */
+    flex-wrap: wrap; /* Permitir quebra de linha se não couber */
+    gap: var(--padding-small); /* Espaçamento entre os itens de stats */
+    width: 100%;
+    padding: var(--padding-small) 0;
+    border-top: 1px dashed var(--panel-border-color);
+    border-bottom: 1px dashed var(--panel-border-color);
+    margin-bottom: var(--padding-medium);
+    font-family: var(--font-code);
+}
+
+#stats-area p {
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+    margin: 0;
+    text-align: center; /* Centralizar cada stat individualmente */
+}
+
